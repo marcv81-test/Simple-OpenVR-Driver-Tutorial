@@ -1,5 +1,4 @@
 #include "TrackerDevice.hpp"
-#include <Windows.h>
 
 ExampleDriver::TrackerDevice::TrackerDevice(std::string serial):
     serial_(serial)
@@ -53,7 +52,7 @@ void ExampleDriver::TrackerDevice::Update()
         linalg::vec<float, 4> hmd_rotation{ (float)hmd_pose.qRotation.x, (float)hmd_pose.qRotation.y, (float)hmd_pose.qRotation.z, (float)hmd_pose.qRotation.w };
 
         // Do shaking animation if haptic vibration was requested
-        float controller_y = -0.35f + 0.01f * std::sinf(8 * 3.1415f * vibrate_anim_state_);
+        float controller_y = -0.35f + 0.01f * std::sin(8 * 3.1415f * vibrate_anim_state_);
 
         linalg::vec<float, 3> hmd_pose_offset = { 0.f, controller_y, -0.5f };
 

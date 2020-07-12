@@ -7,7 +7,7 @@
 
 #include <Driver/IVRDriver.hpp>
 
-extern "C" __declspec(dllexport) void* HmdDriverFactory(const char* interface_name, int* return_code);
+extern "C" void* HmdDriverFactory(const char* interface_name, int* return_code);
 
 namespace ExampleDriver {
     std::shared_ptr<ExampleDriver::IVRDriver> GetDriver();

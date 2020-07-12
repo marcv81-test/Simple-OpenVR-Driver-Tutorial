@@ -1,5 +1,6 @@
 #include "HMDDevice.hpp"
-#include <Windows.h>
+
+#include <cstring>
 
 ExampleDriver::HMDDevice::HMDDevice(std::string serial):serial_(serial)
 {
@@ -21,14 +22,14 @@ void ExampleDriver::HMDDevice::Update()
     float delta_seconds = GetDriver()->GetLastFrameTime().count() / 1000.0f;
 
     // Get orientation
-    this->rot_y_ += (1.0f * (GetAsyncKeyState(VK_RIGHT) == 0) - 1.0f * (GetAsyncKeyState(VK_LEFT) == 0)) * delta_seconds;
-    this->rot_x_ += (-1.0f * (GetAsyncKeyState(VK_UP) == 0) + 1.0f * (GetAsyncKeyState(VK_DOWN) == 0)) * delta_seconds;
+    this->rot_y_ += (1.0f * (false) - 1.0f * (false)) * delta_seconds;
+    this->rot_x_ += (-1.0f * (false) + 1.0f * (false)) * delta_seconds;
     this->rot_x_ = std::fmax(this->rot_x_, -3.14159f/2);
     this->rot_x_ = std::fmin(this->rot_x_, 3.14159f/2);
 
-    linalg::vec<float, 4> y_quat{ 0, std::sinf(this->rot_y_ / 2), 0, std::cosf(this->rot_y_ / 2) };
+    linalg::vec<float, 4> y_quat{ 0, std::sin(this->rot_y_ / 2), 0, std::cos(this->rot_y_ / 2) };
 
-    linalg::vec<float, 4> x_quat{ std::sinf(this->rot_x_ / 2), 0, 0, std::cosf(this->rot_x_ / 2) };
+    linalg::vec<float, 4> x_quat{ std::sin(this->rot_x_ / 2), 0, 0, std::cos(this->rot_x_ / 2) };
 
     linalg::vec<float, 4> pose_rot = linalg::qmul(y_quat, x_quat);
 
@@ -38,8 +39,8 @@ void ExampleDriver::HMDDevice::Update()
     pose.qRotation.z = (float) pose_rot.z;
 
     // Update position based on rotation
-    linalg::vec<float, 3> forward_vec{-1.0f * (GetAsyncKeyState(0x44) == 0) + 1.0f * (GetAsyncKeyState(0x41) == 0), 0, 0};
-    linalg::vec<float, 3> right_vec{0, 0, 1.0f * (GetAsyncKeyState(0x57) == 0) - 1.0f * (GetAsyncKeyState(0x53) == 0) };
+    linalg::vec<float, 3> forward_vec{-1.0f * (false) + 1.0f * (false), 0, 0};
+    linalg::vec<float, 3> right_vec{0, 0, 1.0f * (false) - 1.0f * (false) };
     linalg::vec<float, 3> final_dir = forward_vec + right_vec;
     if (linalg::length(final_dir) > 0.01) {
         final_dir = linalg::normalize(final_dir) * (float)delta_seconds;
@@ -147,7 +148,7 @@ void ExampleDriver::HMDDevice::EnterStandby()
 
 void* ExampleDriver::HMDDevice::GetComponent(const char* pchComponentNameAndVersion)
 {
-    if (!_stricmp(pchComponentNameAndVersion, vr::IVRDisplayComponent_Version)) {
+    if (!strcmp(pchComponentNameAndVersion, vr::IVRDisplayComponent_Version)) {
         return static_cast<vr::IVRDisplayComponent*>(this);
     }
     return nullptr;
