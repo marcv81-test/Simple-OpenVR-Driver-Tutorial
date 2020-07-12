@@ -30,6 +30,7 @@ set(EXAMPLE_PROJECT "driver_${DRIVER_NAME}")
 file(GLOB_RECURSE HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/driver_files/src/*.hpp")
 file(GLOB_RECURSE SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/driver_files/src/*.cpp")
 add_library("${EXAMPLE_PROJECT}" SHARED "${HEADERS}" "${SOURCES}")
+set(CMAKE_SHARED_LIBRARY_PREFIX "")
 
 target_include_directories("${EXAMPLE_PROJECT}" PUBLIC "${OPENVR_INCLUDE_DIR}")
 target_include_directories("${EXAMPLE_PROJECT}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/libraries/linalg")
