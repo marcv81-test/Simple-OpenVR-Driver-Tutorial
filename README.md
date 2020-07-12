@@ -32,16 +32,14 @@ because a debugger is a developers best friend <sup>(besides ctrl-z)</sup>.
 - Clone the project and submodules
 	- `git clone --recursive https://github.com/terminal29/Simple-OpenVR-Driver-Tutorial.git`
 - Build project with CMake
-	- `cd Simple-OpenVR-Driver-Tutorial && cmake .`
-- Open project with Visual Studio and hit build
-	- Driver folder structure and files will be copied to the output folder as `example`.
+	- `cd Simple-OpenVR-Driver-Tutorial && cmake . && make`
 	
 ## Installation
 
 There are two ways to "install" your plugin:
 
 - Find your SteamVR driver directory, which should be at:
-  `C:\Program Files (x86)\Steam\steamapps\common\SteamVR\drivers`
+  `~/.steam/steam/steamapps/common/SteamVR/drivers`
   and copy the `example` directory from the project's build directory into the SteamVR drivers directory. Your folder structure should look something like this:
 
 ![Drivers folder structure](https://i.imgur.com/hOsDk1H.png)
